@@ -9,7 +9,7 @@ const CartItem = ({
   removeItemFromCart,
 }) => {
   return (
-    <tr className="transition duration-300 border-b border-gray-600 hover:bg-gray-700">
+    <tr className="transition duration-300 border-b border-gray-600">
       <td className="flex items-center p-4 text-gray-100">
         <img
           src={product.image}
