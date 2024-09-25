@@ -1,6 +1,3 @@
-import { createContext, useReducer } from "react";
-import PropTypes from "prop-types";
-
 const cartReducer = (state, action) => {
   switch (action.type) {
     case "ADD_TO_CART": {
@@ -40,44 +37,4 @@ const cartReducer = (state, action) => {
   }
 };
 
-export const CartContext = createContext();
-
-const CartProvider = ({ children }) => {
-  const [cart, dispatch] = useReducer(cartReducer, []);
-
-  const addToCart = (product) => {
-    dispatch({ type: "ADD_TO_CART", payload: product });
-  };
-
-  const removeItemFromCart = (id) => {
-    dispatch({ type: "REMOVE_ITEM_FROM_CART", payload: id });
-  };
-
-  const reduceItemQuantity = (id) => {
-    dispatch({ type: "REDUCE_ITEM_QUANTITY", payload: id });
-  };
-
-  const clearCart = () => {
-    dispatch({ type: "CLEAR_CART" });
-  };
-
-  return (
-    <CartContext.Provider
-      value={{
-        cart,
-        addToCart,
-        removeItemFromCart,
-        reduceItemQuantity,
-        clearCart,
-      }}
-    >
-      {children}
-    </CartContext.Provider>
-  );
-};
-
-CartProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-export default CartProvider;
+export default cartReducer;

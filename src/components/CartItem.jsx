@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import { FaTrash } from "react-icons/fa";
 import { BiPlus, BiMinus } from "react-icons/bi";
 
@@ -55,6 +55,19 @@ const CartItem = ({
       </td>
     </tr>
   );
+};
+
+CartItem.propTypes = {
+  product: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    quantity: PropTypes.number.isRequired,
+  }).isRequired,
+  addToCart: PropTypes.func.isRequired,
+  reduceItemQuantity: PropTypes.func.isRequired,
+  removeItemFromCart: PropTypes.func.isRequired,
 };
 
 export default CartItem;
