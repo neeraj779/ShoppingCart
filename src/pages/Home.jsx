@@ -1,9 +1,11 @@
+import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import apiClient from "../api/axios";
 import ProductList from "../components/ProductList";
 import LoadingSpinner from "../components/LoadingSpinner";
 import noDataSvg from "../assets/no-data.svg";
 import SearchBar from "../components/SearchBar";
+import FilterBar from "../components/FilterBar";
 import useSearch from "../hooks/useSearch";
 
 const fetchProducts = async () => {
@@ -17,11 +19,26 @@ const Home = () => {
     queryFn: fetchProducts,
   });
 
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  const categories = useMemo(() => {
+    if (!data) return [];
+    const categorySet = new Set(data.map((product) => product.category));
+    return Array.from(categorySet);
+  }, [data]);
+
   const {
     searchTerm,
     setSearchTerm,
     filteredData: filteredProducts,
   } = useSearch(data || [], "title");
+
+  const filteredByCategory = useMemo(() => {
+    if (!selectedCategory) return filteredProducts;
+    return filteredProducts.filter(
+      (product) => product.category === selectedCategory
+    );
+  }, [filteredProducts, selectedCategory]);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -38,8 +55,15 @@ const Home = () => {
       </h1>
 
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <div className="flex flex-col mb-4 space-y-4 md:flex-row md:items-center md:justify-between">
+        <FilterBar
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          categories={categories}
+        />
+      </div>
 
-      {filteredProducts.length === 0 ? (
+      {filteredByCategory.length === 0 ? (
         <div className="flex flex-col items-center justify-center space-y-4">
           <img src={noDataSvg} alt="No data" className="w-64 h-64" />
           <p className="text-lg font-semibold text-gray-200">
@@ -47,7 +71,7 @@ const Home = () => {
           </p>
         </div>
       ) : (
-        <ProductList products={filteredProducts} />
+        <ProductList products={filteredByCategory} />
       )}
     </div>
   );
