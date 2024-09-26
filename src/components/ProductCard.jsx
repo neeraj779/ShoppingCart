@@ -54,7 +54,7 @@ ProductCard.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    id: PropTypes.number.isRequired,
   }).isRequired,
   inCart: PropTypes.shape({
     quantity: PropTypes.number,
