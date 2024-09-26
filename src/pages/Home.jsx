@@ -54,8 +54,8 @@ const Home = () => {
         Products
       </h1>
 
-      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <div className="flex flex-col mb-4 space-y-4 md:flex-row md:items-center md:justify-between">
+      <div className="flex flex-row items-center justify-between mb-4 space-x-4">
+        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <FilterBar
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}

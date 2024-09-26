@@ -2,11 +2,11 @@ import PropTypes from "prop-types";
 
 const FilterBar = ({ selectedCategory, setSelectedCategory, categories }) => {
   return (
-    <div>
+    <div className="mb-6">
       <select
         value={selectedCategory}
         onChange={(e) => setSelectedCategory(e.target.value)}
-        className="w-full px-4 py-2 text-lg text-white bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
+        className="px-4 py-2 text-lg text-white bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
       >
         <option value="">All Categories</option>
         {categories.map((category) => (
