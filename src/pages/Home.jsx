@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
 import apiClient from "../api/axios";
 import ProductList from "../components/ProductList";
 import LoadingSpinner from "../components/LoadingSpinner";
 import noDataSvg from "../assets/no-data.svg";
 import SearchBar from "../components/SearchBar";
+import useSearch from "../hooks/useSearch";
 
 const fetchProducts = async () => {
   const res = await apiClient().get("/products");
@@ -17,7 +17,11 @@ const Home = () => {
     queryFn: fetchProducts,
   });
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const {
+    searchTerm,
+    setSearchTerm,
+    filteredData: filteredProducts,
+  } = useSearch(data || [], "title");
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -26,11 +30,6 @@ const Home = () => {
   if (error) {
     return <div>Error loading products...</div>;
   }
-
-  const filteredProducts = data.filter((product) =>
-    product.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-  console.log(filteredProducts);
 
   return (
     <div className="container px-10 py-10 mx-auto">
