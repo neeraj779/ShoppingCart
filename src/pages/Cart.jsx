@@ -17,7 +17,10 @@ const Cart = () => {
 
   const handleCheckout = useCallback(() => {
     toast.success(
-      `Order placed successfully! Total: $${totalAmount.toFixed(2)} 🎉`
+      `Order placed successfully! Total: $${totalAmount.toFixed(2)} 🎉`,
+      {
+        duration: 8000,
+      }
     );
     clearCart();
   }, [totalAmount, clearCart]);
